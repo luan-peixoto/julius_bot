@@ -1,0 +1,1 @@
+worker: python julius-bot.py
