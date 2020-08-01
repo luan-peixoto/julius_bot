@@ -84,7 +84,7 @@ the_reply = ['Esse tweet custou ',
 
 
 # -------------------------------------------------------------------------- POSTS
-def reply_tt(api_n,current):
+def reply_tt(api_n):
     last_seen_id = int(retrieve_text(FILE_NAME))
     print('Searching for tweets...')
     tweets = []
@@ -168,11 +168,7 @@ def reply_tt(api_n,current):
                                 api_n.update_status(
                                     '@' + tweet.user.screen_name + ' ' + the_reply[9],
                                     in_reply_to_status_id=tweet.id)
-                            if current == 'ONE':
-                                store_text('TWO', STATUS_NAME)
-                            else:
-                                store_text('ONE', STATUS_NAME)
-                            time.sleep(randint(60, 70))
+                            time.sleep(randint(62, 78))
                 else:
                     print('Not a br tweet, skipping...')
             else:
@@ -183,15 +179,17 @@ def reply_tt(api_n,current):
         except tweepy.TweepError as e:
             print(e.reason)
             if '261' in e.reason:
-                if current == 'ONE':
-                    store_text('OFF', 'api_1.txt')
+                if status == 'ONE':
+                    store_text('TWO', STATUS_NAME)
                     time.sleep(300)
                     break
                 else:
-                    store_text('OFF', 'api_2.txt')
-                    time.sleep(300)
-                    break
-
+                    while True:
+                        print('[ALL KEYS USED]')
+                        for i in burros:
+                            print(i, end=' ')
+                        print('Last seen id: ' + str(retrieve_text(FILE_NAME)))
+                        time.sleep(100)
         except StopIteration:
             break
 
@@ -200,28 +198,11 @@ def reply_tt(api_n,current):
 while True:
     print('Running bot...')
     status = retrieve_text(STATUS_NAME)
-    api_one = retrieve_text('api_1.txt')
-    api_two = retrieve_text('api_2.txt')
-    if api_one == api_two == 'ON':
-        if status == 'ONE':
-            print('[USING FIRST KEY]')
-            reply_tt(api_1,'ONE')
-        else:
-            print('[USING SECOND KEY]')
-            reply_tt(api_2,'TWO')
+    if status == 'ONE':
+        print('[USING FIRST KEY]')
+        reply_tt(api_1)
     else:
-        if api_one == 'OFF' and api_two == 'ON':
-            print('[USING SECOND KEY]')
-            reply_tt(api_2, 'TWO')
-        elif api_one == 'ON' and api_two == 'OFF':
-            print('[USING FIRST KEY]')
-            reply_tt(api_1, 'ONE')
-        else:
-            while True:
-                print('[ALL KEYS USED]')
-                for i in burros:
-                    print(i, end=' ')
-                print('Last seen id: ' + str(retrieve_text(FILE_NAME)))
-                time.sleep(100)
+        print('[USING SECOND KEY]')
+        reply_tt(api_2)
     print('Sleeping for 60 seconds...')
     time.sleep(60)
