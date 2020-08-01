@@ -68,7 +68,7 @@ def store_text(text, file_name):
 pesquisa = 'julius?'
 pesquisa_f = 'julius?!'
 tweet_number = 20
-filter = ['en', 'ja', 'fr', 'it', 'ru', 'in', 'es', 'ceb', 'de', 'tl']
+filter = ['en', 'ja', 'fr', 'it', 'ru', 'in', 'es', 'ceb', 'de', 'tl', 'da']
 
 # -------------------------------------------------------------------------- REPLIES
 the_reply = ['Esse tweet custou ',
