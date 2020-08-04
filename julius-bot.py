@@ -127,39 +127,39 @@ def reply_tt(api_n):
                                     in_reply_to_status_id=tweet.id)
                             time.sleep(randint(60, 70))
                         else:
-                            resp = randint(0, 20)
+                            resp = randint(0, 25)
                             api_n.create_favorite(tweet.id)
-                            if resp < 7:
+                            if resp < 9:
                                 api_n.update_status(
                                     '@' + tweet.user.screen_name + ' ' + the_reply[0]%(randint(15, 99)),
                                     in_reply_to_status_id=tweet.id)
-                            elif 11 > resp > 6:
+                            elif 15 > resp > 8:
                                 api_n.update_status(
                                     '@' + tweet.user.screen_name + ' ' + the_reply[1]%(randint(15, 99)),
                                     in_reply_to_status_id=tweet.id)
-                            elif 15 > resp > 10:
+                            elif 20 > resp > 14:
                                 api_n.update_status(
                                     '@' + tweet.user.screen_name + ' ' + the_reply[2]%(randint(2, 8), randint(15, 99)),
                                     in_reply_to_status_id=tweet.id)
-                            elif resp == 15:
+                            elif resp == 20:
+                                api_n.update_status(
+                                    '@' + tweet.user.screen_name + ' ' + the_reply[3],
+                                    in_reply_to_status_id=tweet.id)
+                            elif resp == 21:
                                 api_n.update_status(
                                     '@' + tweet.user.screen_name + ' ' + the_reply[4],
                                     in_reply_to_status_id=tweet.id)
-                            elif resp == 16:
+                            elif resp == 22:
                                 api_n.update_status(
                                     '@' + tweet.user.screen_name + ' ' + the_reply[5],
                                     in_reply_to_status_id=tweet.id)
-                            elif resp == 17:
+                            elif resp == 23:
                                 api_n.update_status(
                                     '@' + tweet.user.screen_name + ' ' + the_reply[6],
                                     in_reply_to_status_id=tweet.id)
-                            elif resp == 18:
+                            elif resp == 24:
                                 api_n.update_status(
-                                    '@' + tweet.user.screen_name + ' ' + the_reply[7],
-                                    in_reply_to_status_id=tweet.id)
-                            elif resp == 19:
-                                api_n.update_status(
-                                    '@' + tweet.user.screen_name + ' ' + the_reply[8],
+                                    '@' + tweet.user.screen_name + ' ' + the_reply7[7],
                                     in_reply_to_status_id=tweet.id)
                             else:
                                 api_n.update_status(
