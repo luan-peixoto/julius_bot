@@ -71,16 +71,18 @@ tweet_number = 20
 filter = ['en', 'ja', 'fr', 'it', 'ru', 'in', 'es', 'ceb', 'de', 'tl', 'da']
 
 # -------------------------------------------------------------------------- REPLIES
-the_reply = ['Esse tweet custou ',
-             '1 dólar e ',
-             ' centavos.',
-             ' dólares e ',
-             'Se você não comprar nada, o desconto é maior.', 'Aceita vale-refeição?',
+the_reply = ['Esse tweet custou %i centavos.',
+             'Esse tweet custou 1 dólar e %i centavos.',
+             'Esse tweet custou %i dólares e %i centavos.',
+             'Se você não comprar nada, o desconto é maior.',
+             'Aceita vale-refeição?',
              'Pra que você vai sair pra relaxar se você pode relaxar em casa e de graça?',
              'Eu me lembro dos primeiros 35 dólares que eu achei. Era 17 horas, em frente ao banco, fazia 27 graus, eu achei duas notas de 10, duas de 5, três moedas de 1 dólar, quatro de 25, e 100 moedas de 1 centavo. E uma delas era canadense.',
              'Quer saber o que é mágica? Eu tenho dois empregos, trabalho sete dias por semana e todo dia meu dinheiro desaparece.',
-             'Eu ganhei meus primeiros 30 dólares quando tinha 20 anos, e ainda não gastei tudo.', 'O @',
-             ' está te devendo ']
+             'Eu ganhei meus primeiros 30 dólares quando tinha 20 anos, e ainda não gastei tudo.',
+             'O @%s está te devendo %i centavos.',
+             'O @%s está te devendo 1 dólar e %i centavos.',
+             'O @%s está te devendo %i dólares e %i centavos.']
 
 
 # -------------------------------------------------------------------------- POSTS
@@ -105,44 +107,39 @@ def reply_tt(api_n):
                     else:
                         friends = api_0.show_friendship(source_screen_name='bot_do_julius',
                                                         target_screen_name=tweet.user.screen_name)
-                        if (tweet.in_reply_to_status_id is not None) and (pesquisa_f in tweet.full_text.lower()) and (
-                                friends[0].followed_by == True):
+                        if (tweet.in_reply_to_status_id is not None) and (pesquisa_f in tweet.full_text.lower()) and (friends[0].followed_by == True):
                             print("It's a request number 2.")
                             main_tweet = api_0.get_status(tweet.in_reply_to_status_id)
                             resp = randint(0, 3)
                             api_n.create_favorite(tweet.id)
                             if resp < 2:
                                 api_n.update_status(
-                                    '@' + tweet.user.screen_name + ' ' + the_reply[10] + main_tweet.user.screen_name +
-                                    the_reply[11] + str(randint(15, 99)) + the_reply[2], in_reply_to_status_id=tweet.id)
+                                    '@' + tweet.user.screen_name + ' ' + the_reply[9] % (
+                                    main_tweet.user.screen_name, randint(15, 99)), in_reply_to_status_id=tweet.id)
                             elif 1 < resp < 3:
                                 api_n.update_status(
-                                    '@' + tweet.user.screen_name + ' ' + the_reply[10] + main_tweet.user.screen_name +
-                                    the_reply[11] + the_reply[1] + str(randint(15, 99)) + the_reply[2],
-                                    in_reply_to_status_id=tweet.id)
+                                    '@' + tweet.user.screen_name + ' ' + the_reply[10] % (
+                                    main_tweet.user.screen_name, randint(15, 99)), in_reply_to_status_id=tweet.id)
                             else:
                                 api_n.update_status(
-                                    '@' + tweet.user.screen_name + ' ' + the_reply[10] + main_tweet.user.screen_name +
-                                    the_reply[11] + str(randint(2, 8)) + the_reply[3] + str(randint(15, 99)) +
-                                    the_reply[2], in_reply_to_status_id=tweet.id)
-                            time.sleep(randint(62, 72))
-
+                                    '@' + tweet.user.screen_name + ' ' + the_reply[11] % (
+                                    main_tweet.user.screen_name, randint(2, 8), randint(15, 99)),
+                                    in_reply_to_status_id=tweet.id)
+                            time.sleep(randint(60, 70))
                         else:
                             resp = randint(0, 20)
                             api_n.create_favorite(tweet.id)
                             if resp < 7:
                                 api_n.update_status(
-                                    '@' + tweet.user.screen_name + ' ' + the_reply[0] + str(
-                                        randint(15, 99)) + the_reply[2],
+                                    '@' + tweet.user.screen_name + ' ' + the_reply[0]%(randint(15, 99)),
                                     in_reply_to_status_id=tweet.id)
                             elif 11 > resp > 6:
                                 api_n.update_status(
-                                    '@' + tweet.user.screen_name + ' ' + the_reply[0] + the_reply[1] + str(
-                                        randint(15, 99)) + the_reply[2], in_reply_to_status_id=tweet.id)
+                                    '@' + tweet.user.screen_name + ' ' + the_reply[1]%(randint(15, 99)),
+                                    in_reply_to_status_id=tweet.id)
                             elif 15 > resp > 10:
                                 api_n.update_status(
-                                    '@' + tweet.user.screen_name + ' ' + the_reply[0] + str(randint(2, 8)) +
-                                    the_reply[3] + str(randint(15, 99)) + the_reply[2],
+                                    '@' + tweet.user.screen_name + ' ' + the_reply[2]%(randint(2, 8), randint(15, 99)),
                                     in_reply_to_status_id=tweet.id)
                             elif resp == 15:
                                 api_n.update_status(
@@ -166,9 +163,9 @@ def reply_tt(api_n):
                                     in_reply_to_status_id=tweet.id)
                             else:
                                 api_n.update_status(
-                                    '@' + tweet.user.screen_name + ' ' + the_reply[9],
+                                    '@' + tweet.user.screen_name + ' ' + the_reply[8],
                                     in_reply_to_status_id=tweet.id)
-                            time.sleep(randint(62, 78))
+                            time.sleep(randint(60, 70))
                 else:
                     print('Not a br tweet, skipping...')
             else:
@@ -195,6 +192,7 @@ def reply_tt(api_n):
 
 
 # -------------------------------------------------------------------------- MAIN
+
 while True:
     print('Running bot...')
     status = retrieve_text(STATUS_NAME)
