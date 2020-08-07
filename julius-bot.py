@@ -5,8 +5,7 @@ import datetime
 from os import environ
 from random import randint
 
-# --------------------------------------------------------------------------  KEYS yes
-
+# --------------------------------------------------------------------------  KEYS
 auth_0 = tweepy.OAuthHandler(environ['CONSUMER_KEY_0'], environ['CONSUMER_SECRET_0'])
 auth_0.set_access_token(environ['ACCESS_KEY_0'], environ['ACCESS_SECRET_0'])
 api_0 = tweepy.API(auth_0, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
@@ -18,51 +17,6 @@ api_1 = tweepy.API(auth_1, wait_on_rate_limit=True, wait_on_rate_limit_notify=Tr
 auth_2 = tweepy.OAuthHandler(environ['CONSUMER_KEY_2'], environ['CONSUMER_SECRET_2'])
 auth_2.set_access_token(environ['ACCESS_KEY_2'], environ['ACCESS_SECRET_2'])
 api_2 = tweepy.API(auth_2, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
-
-# -------------------------------------------------------------------------- CHECK SPAM
-burros = []
-
-
-def time_checker(tweet_id, tweet_created_at, user_screen_name, search_text):
-    time_spam = datetime.timedelta(0, 0, 0, 0, 3, 0, 0)
-    current_tweet = datetime.datetime.strptime(tweet_created_at, '%Y-%m-%d %H:%M:%S')
-    for twt in tweepy.Cursor(api_0.user_timeline, id=user_screen_name, tweet_mode='extended', include_rts=False).items(
-            10):
-        try:
-            if twt.id != tweet_id:
-                if search_text in twt.full_text.lower():
-                    tweet_time = datetime.datetime.strptime(str(twt.created_at), '%Y-%m-%d %H:%M:%S')
-                    if current_tweet > tweet_time:
-                        if (current_tweet - tweet_time) <= time_spam:
-                            return True
-                    else:
-                        if (tweet_time - current_tweet) <= time_spam:
-                            return True
-        except tweepy.TweepError as e:
-            print(e.reason)
-        except StopIteration:
-            break
-    return False
-
-
-# -------------------------------------------------------------------------- CHECK TEXT FILE FUNCTION
-FILE_NAME = 'last_interaction_id.txt'
-STATUS_NAME = 'status.txt'
-
-
-def retrieve_text(file_name):
-    file = open(file_name, 'r')
-    text = str(file.read().strip())
-    file.close()
-    return text
-
-
-def store_text(text, file_name):
-    file = open(file_name, 'w')
-    file.write(str(text))
-    file.close()
-    return
-
 
 # -------------------------------------------------------------------------- SEARCH
 pesquisa = 'julius?'
@@ -84,6 +38,46 @@ the_reply = ['Esse tweet custou %i centavos.',
              'O @%s está te devendo 1 dólar e %i centavos.',
              'O @%s está te devendo %i dólares e %i centavos.']
 
+# -------------------------------------------------------------------------- CHECK SPAM
+burros = []
+def time_checker(tweet_id, tweet_created_at, user_screen_name, search_text):
+    time_spam = datetime.timedelta(0, 0, 0, 0, 3, 0, 0)
+    current_tweet = datetime.datetime.strptime(tweet_created_at, '%Y-%m-%d %H:%M:%S')
+    for twt in tweepy.Cursor(api_0.user_timeline, id=user_screen_name, tweet_mode='extended', include_rts=False).items(
+            10):
+        try:
+            if twt.id != tweet_id:
+                if search_text in twt.full_text.lower():
+                    tweet_time = datetime.datetime.strptime(str(twt.created_at), '%Y-%m-%d %H:%M:%S')
+                    if current_tweet > tweet_time:
+                        if (current_tweet - tweet_time) <= time_spam:
+                            return True
+                    else:
+                        if (tweet_time - current_tweet) <= time_spam:
+                            return True
+        except tweepy.TweepError as e:
+            print(e.reason)
+        except StopIteration:
+            break
+    return False
+
+# -------------------------------------------------------------------------- CHECK TEXT FILE FUNCTION
+FILE_NAME = 'last_interaction_id.txt'
+STATUS_NAME = 'status.txt'
+
+
+def retrieve_text(file_name):
+    file = open(file_name, 'r')
+    text = str(file.read().strip())
+    file.close()
+    return text
+
+
+def store_text(text, file_name):
+    file = open(file_name, 'w')
+    file.write(str(text))
+    file.close()
+    return
 
 # -------------------------------------------------------------------------- POSTS
 def reply_tt(api_n):
@@ -190,9 +184,7 @@ def reply_tt(api_n):
         except StopIteration:
             break
 
-
 # -------------------------------------------------------------------------- MAIN
-
 while True:
     print('Running bot...')
     status = retrieve_text(STATUS_NAME)
