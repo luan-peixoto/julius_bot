@@ -119,6 +119,7 @@ def reply_tt(api_n):
                                     '@' + tweet.user.screen_name + ' ' + the_reply[11] % (
                                     main_tweet.user.screen_name, randint(2, 8), randint(15, 99)),
                                     in_reply_to_status_id=tweet.id)
+                            print('Reply sent. Sleeping for 60~70 seconds.')
                             time.sleep(randint(60, 70))
                         else:
                             resp = randint(0, 25)
@@ -159,6 +160,7 @@ def reply_tt(api_n):
                                 api_n.update_status(
                                     '@' + tweet.user.screen_name + ' ' + the_reply[8],
                                     in_reply_to_status_id=tweet.id)
+                            print('Reply sent. Sleeping for 60~70 seconds.')
                             time.sleep(randint(60, 70))
                 else:
                     print('Not a br tweet, skipping...')
@@ -194,5 +196,5 @@ while True:
     else:
         print('[USING SECOND KEY]')
         reply_tt(api_2)
-    print('Sleeping for 60 seconds...')
+    print('Cursor search ended. Sleeping for 60 seconds...')
     time.sleep(60)
