@@ -154,7 +154,7 @@ def reply_tt(api_n):
                                     in_reply_to_status_id=tweet.id)
                             elif resp == 24:
                                 api_n.update_status(
-                                    '@' + tweet.user.screen_name + ' ' + the_reply7[7],
+                                    '@' + tweet.user.screen_name + ' ' + the_reply[7],
                                     in_reply_to_status_id=tweet.id)
                             else:
                                 api_n.update_status(
