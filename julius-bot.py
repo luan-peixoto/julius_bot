@@ -18,6 +18,33 @@ auth_2 = tweepy.OAuthHandler(environ['CONSUMER_KEY_2'], environ['CONSUMER_SECRET
 auth_2.set_access_token(environ['ACCESS_KEY_2'], environ['ACCESS_SECRET_2'])
 api_2 = tweepy.API(auth_2, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 
+auth_3 = tweepy.OAuthHandler(environ['CONSUMER_KEY_3'], environ['CONSUMER_SECRET_3'])
+auth_3.set_access_token(environ['ACCESS_KEY_3'], environ['ACCESS_SECRET_3'])
+api_3 = tweepy.API(auth_3, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
+
+auth_4 = tweepy.OAuthHandler(environ['CONSUMER_KEY_4'], environ['CONSUMER_SECRET_4'])
+auth_4.set_access_token(environ['ACCESS_KEY_4'], environ['ACCESS_SECRET_4'])
+api_4 = tweepy.API(auth_4, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
+
+auth_5 = tweepy.OAuthHandler(environ['CONSUMER_KEY_5'], environ['CONSUMER_SECRET_5'])
+auth_5.set_access_token(environ['ACCESS_KEY_5'], environ['ACCESS_SECRET_5'])
+api_5 = tweepy.API(auth_5, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
+
+auth_6 = tweepy.OAuthHandler(environ['CONSUMER_KEY_6'], environ['CONSUMER_SECRET_6'])
+auth_6.set_access_token(environ['ACCESS_KEY_6'], environ['ACCESS_SECRET_6'])
+api_6 = tweepy.API(auth_6, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
+
+
+
+
+
+
+
+
+
+
+
+
 # -------------------------------------------------------------------------- SEARCH
 pesquisa = 'julius?'
 pesquisa_f = 'julius?!'
@@ -176,6 +203,22 @@ def reply_tt(api_n):
                     store_text('TWO', STATUS_NAME)
                     time.sleep(300)
                     break
+                elif status == 'TWO':
+                    store_text('THREE', STATUS_NAME)
+                    time.sleep(300)
+                    break
+                elif status == 'THREE':
+                    store_text('FOUR', STATUS_NAME)
+                    time.sleep(300)
+                    break
+                elif status == 'FOUR':
+                    store_text('FIVE', STATUS_NAME)
+                    time.sleep(300)
+                    break
+                elif status == 'FIVE':
+                    store_text('SIX', STATUS_NAME)
+                    time.sleep(300)
+                    break
                 else:
                     while True:
                         print('[ALL KEYS USED]')
@@ -193,8 +236,20 @@ while True:
     if status == 'ONE':
         print('[USING FIRST KEY]')
         reply_tt(api_1)
-    else:
+    elif status == 'TWO':
         print('[USING SECOND KEY]')
+        reply_tt(api_2)
+    elif status == 'THREE':
+        print('[USING THIRD KEY]')
+        reply_tt(api_2)
+    elif status == 'FOUR':
+        print('[USING FOURTH KEY]')
+        reply_tt(api_2)
+    elif status == 'FIVE':
+        print('[USING FIFTH KEY]')
+        reply_tt(api_2)
+    else:
+        print('[USING LAST KEY]')
         reply_tt(api_2)
     print('Cursor search ended. Sleeping for 60 seconds...')
     time.sleep(60)
