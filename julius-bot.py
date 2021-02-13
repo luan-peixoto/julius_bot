@@ -34,17 +34,6 @@ auth_6 = tweepy.OAuthHandler(environ['CONSUMER_KEY_6'], environ['CONSUMER_SECRET
 auth_6.set_access_token(environ['ACCESS_KEY_6'], environ['ACCESS_SECRET_6'])
 api_6 = tweepy.API(auth_6, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 
-
-
-
-
-
-
-
-
-
-
-
 # -------------------------------------------------------------------------- SEARCH
 pesquisa = 'julius?'
 pesquisa_f = 'julius?!'
@@ -67,6 +56,8 @@ the_reply = ['Esse tweet custou %i centavos.',
 
 # -------------------------------------------------------------------------- CHECK SPAM
 burros = []
+
+
 def time_checker(tweet_id, tweet_created_at, user_screen_name, search_text):
     time_spam = datetime.timedelta(0, 0, 0, 0, 3, 0, 0)
     current_tweet = datetime.datetime.strptime(tweet_created_at, '%Y-%m-%d %H:%M:%S')
@@ -88,6 +79,7 @@ def time_checker(tweet_id, tweet_created_at, user_screen_name, search_text):
             break
     return False
 
+
 # -------------------------------------------------------------------------- CHECK TEXT FILE FUNCTION
 FILE_NAME = 'last_interaction_id.txt'
 STATUS_NAME = 'status.txt'
@@ -105,6 +97,7 @@ def store_text(text, file_name):
     file.write(str(text))
     file.close()
     return
+
 
 # -------------------------------------------------------------------------- POSTS
 def reply_tt(api_n):
@@ -128,7 +121,8 @@ def reply_tt(api_n):
                     else:
                         friends = api_0.show_friendship(source_screen_name='bot_do_julius',
                                                         target_screen_name=tweet.user.screen_name)
-                        if (tweet.in_reply_to_status_id is not None) and (pesquisa_f in tweet.full_text.lower()) and (friends[0].followed_by == True):
+                        if (tweet.in_reply_to_status_id is not None) and (pesquisa_f in tweet.full_text.lower()) and (
+                                friends[0].followed_by == True):
                             print("It's a request number 2.")
                             main_tweet = api_0.get_status(tweet.in_reply_to_status_id)
                             resp = randint(0, 3)
@@ -136,15 +130,15 @@ def reply_tt(api_n):
                             if resp < 2:
                                 api_n.update_status(
                                     '@' + tweet.user.screen_name + ' ' + the_reply[9] % (
-                                    main_tweet.user.screen_name, randint(15, 99)), in_reply_to_status_id=tweet.id)
+                                        main_tweet.user.screen_name, randint(15, 99)), in_reply_to_status_id=tweet.id)
                             elif 1 < resp < 3:
                                 api_n.update_status(
                                     '@' + tweet.user.screen_name + ' ' + the_reply[10] % (
-                                    main_tweet.user.screen_name, randint(15, 99)), in_reply_to_status_id=tweet.id)
+                                        main_tweet.user.screen_name, randint(15, 99)), in_reply_to_status_id=tweet.id)
                             else:
                                 api_n.update_status(
                                     '@' + tweet.user.screen_name + ' ' + the_reply[11] % (
-                                    main_tweet.user.screen_name, randint(2, 8), randint(15, 99)),
+                                        main_tweet.user.screen_name, randint(2, 8), randint(15, 99)),
                                     in_reply_to_status_id=tweet.id)
                             print('Reply sent. Sleeping for 60~70 seconds.')
                             time.sleep(randint(60, 70))
@@ -153,15 +147,16 @@ def reply_tt(api_n):
                             api_n.create_favorite(tweet.id)
                             if resp < 9:
                                 api_n.update_status(
-                                    '@' + tweet.user.screen_name + ' ' + the_reply[0]%(randint(15, 99)),
+                                    '@' + tweet.user.screen_name + ' ' + the_reply[0] % (randint(15, 99)),
                                     in_reply_to_status_id=tweet.id)
                             elif 15 > resp > 8:
                                 api_n.update_status(
-                                    '@' + tweet.user.screen_name + ' ' + the_reply[1]%(randint(15, 99)),
+                                    '@' + tweet.user.screen_name + ' ' + the_reply[1] % (randint(15, 99)),
                                     in_reply_to_status_id=tweet.id)
                             elif 20 > resp > 14:
                                 api_n.update_status(
-                                    '@' + tweet.user.screen_name + ' ' + the_reply[2]%(randint(2, 8), randint(15, 99)),
+                                    '@' + tweet.user.screen_name + ' ' + the_reply[2] % (
+                                    randint(2, 8), randint(15, 99)),
                                     in_reply_to_status_id=tweet.id)
                             elif resp == 20:
                                 api_n.update_status(
@@ -199,57 +194,97 @@ def reply_tt(api_n):
         except tweepy.TweepError as e:
             print(e.reason)
             if '261' in e.reason:
-                if status == 'ONE':
-                    store_text('TWO', STATUS_NAME)
-                    time.sleep(300)
-                    break
-                elif status == 'TWO':
-                    store_text('THREE', STATUS_NAME)
-                    time.sleep(300)
-                    break
-                elif status == 'THREE':
-                    store_text('FOUR', STATUS_NAME)
-                    time.sleep(300)
-                    break
-                elif status == 'FOUR':
-                    store_text('FIVE', STATUS_NAME)
-                    time.sleep(300)
-                    break
-                elif status == 'FIVE':
-                    store_text('SIX', STATUS_NAME)
-                    time.sleep(300)
-                    break
-                else:
-                    while True:
-                        print('[ALL KEYS USED]')
-                        for i in burros:
-                            print(i, end=' ')
-                        print('Last seen id: ' + str(retrieve_text(FILE_NAME)))
-                        time.sleep(100)
+                return 0
+
         except StopIteration:
             break
+    return 1
+
 
 # -------------------------------------------------------------------------- MAIN
-while True:
-    print('Running bot...')
-    status = retrieve_text(STATUS_NAME)
-    if status == 'ONE':
+
+up = ['ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX']
+ATUAL = 0
+print('Running bot...')
+while up[0] != up[1] and up[0] != up[2] and up[0] != up[3] and up[0] != up[4] and up[0] != up[5]:
+    if up[ATUAL] == '-':
+        if ATUAL != 5:
+            ATUAL += 1
+        else:
+            ATUAL = 0
+    elif up[ATUAL] == 'ONE':
         print('[USING FIRST KEY]')
-        reply_tt(api_1)
-    elif status == 'TWO':
+        r = reply_tt(api_1)
+        if r == 1:
+            if ATUAL != 5:
+                ATUAL += 1
+            else:
+                ATUAL = 0
+        else:
+            up[ATUAL] = '-'
+        print('Cursor search ended. Sleeping for 60 seconds...')
+        time.sleep(60)
+    elif up[ATUAL] == 'TWO':
         print('[USING SECOND KEY]')
-        reply_tt(api_2)
-    elif status == 'THREE':
+        r = reply_tt(api_2)
+        if r == 1:
+            if ATUAL != 5:
+                ATUAL += 1
+            else:
+                ATUAL = 0
+        else:
+            up[ATUAL] = '-'
+        print('Cursor search ended. Sleeping for 60 seconds...')
+        time.sleep(60)
+    elif up[ATUAL] == 'THREE':
         print('[USING THIRD KEY]')
-        reply_tt(api_2)
-    elif status == 'FOUR':
+        r = reply_tt(api_3)
+        if r == 1:
+            if ATUAL != 5:
+                ATUAL += 1
+            else:
+                ATUAL = 0
+        else:
+            up[ATUAL] = '-'
+        print('Cursor search ended. Sleeping for 60 seconds...')
+        time.sleep(60)
+    elif up[ATUAL] == 'FOUR':
         print('[USING FOURTH KEY]')
-        reply_tt(api_2)
-    elif status == 'FIVE':
+        r = reply_tt(api_4)
+        if r == 1:
+            if ATUAL != 5:
+                ATUAL += 1
+            else:
+                ATUAL = 0
+        else:
+            up[ATUAL] = '-'
+        print('Cursor search ended. Sleeping for 60 seconds...')
+        time.sleep(60)
+    elif up[ATUAL] == 'FIVE':
         print('[USING FIFTH KEY]')
-        reply_tt(api_2)
+        r = reply_tt(api_5)
+        if r == 1:
+            if ATUAL != 5:
+                ATUAL += 1
+            else:
+                ATUAL = 0
+        else:
+            up[ATUAL] = '-'
+        print('Cursor search ended. Sleeping for 60 seconds...')
+        time.sleep(60)
     else:
         print('[USING LAST KEY]')
-        reply_tt(api_2)
-    print('Cursor search ended. Sleeping for 60 seconds...')
-    time.sleep(60)
+        r = reply_tt(api_6)
+        if r == 1:
+            if ATUAL != 5:
+                ATUAL += 1
+            else:
+                ATUAL = 0
+        else:
+            up[ATUAL] = '-'
+        print('Cursor search ended. Sleeping for 60 seconds...')
+        time.sleep(60)
+while True:
+    print('[ALL KEYS USED]')
+    print('Last seen id: ' + str(retrieve_text(FILE_NAME)))
+    time.sleep(100)
