@@ -203,85 +203,28 @@ def reply_tt(api_n):
 
 # -------------------------------------------------------------------------- MAIN
 
-up = ['ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX']
-ATUAL = 0
+keys = [api_1, api_2, api_3, api_4, api_5, api_6]
+nums = ['FIRST','SECOND','THIRD','FOURTH','FIFTH','SIXTH']
+current = 0
+size = 6
 print('Running bot...')
-while up[0] != up[1] and up[0] != up[2] and up[0] != up[3] and up[0] != up[4] and up[0] != up[5]:
-    if up[ATUAL] == '-':
-        if ATUAL != 5:
-            ATUAL += 1
-        else:
-            ATUAL = 0
-    elif up[ATUAL] == 'ONE':
-        print('[USING FIRST KEY]')
-        r = reply_tt(api_1)
+while size > 0:
+        print('[USING %s KEY]' %nums[current])
+        r = reply_tt(keys[current])
         if r == 1:
-            if ATUAL != 5:
-                ATUAL += 1
+            if current == size - 1:
+                current = 0
             else:
-                ATUAL = 0
+                current += 1
         else:
-            up[ATUAL] = '-'
-        print('Cursor search ended. Sleeping for 60 seconds...')
-        time.sleep(60)
-    elif up[ATUAL] == 'TWO':
-        print('[USING SECOND KEY]')
-        r = reply_tt(api_2)
-        if r == 1:
-            if ATUAL != 5:
-                ATUAL += 1
+            if current == size - 1:
+                size -= 1
+                current = 0
             else:
-                ATUAL = 0
-        else:
-            up[ATUAL] = '-'
-        print('Cursor search ended. Sleeping for 60 seconds...')
-        time.sleep(60)
-    elif up[ATUAL] == 'THREE':
-        print('[USING THIRD KEY]')
-        r = reply_tt(api_3)
-        if r == 1:
-            if ATUAL != 5:
-                ATUAL += 1
-            else:
-                ATUAL = 0
-        else:
-            up[ATUAL] = '-'
-        print('Cursor search ended. Sleeping for 60 seconds...')
-        time.sleep(60)
-    elif up[ATUAL] == 'FOUR':
-        print('[USING FOURTH KEY]')
-        r = reply_tt(api_4)
-        if r == 1:
-            if ATUAL != 5:
-                ATUAL += 1
-            else:
-                ATUAL = 0
-        else:
-            up[ATUAL] = '-'
-        print('Cursor search ended. Sleeping for 60 seconds...')
-        time.sleep(60)
-    elif up[ATUAL] == 'FIVE':
-        print('[USING FIFTH KEY]')
-        r = reply_tt(api_5)
-        if r == 1:
-            if ATUAL != 5:
-                ATUAL += 1
-            else:
-                ATUAL = 0
-        else:
-            up[ATUAL] = '-'
-        print('Cursor search ended. Sleeping for 60 seconds...')
-        time.sleep(60)
-    else:
-        print('[USING LAST KEY]')
-        r = reply_tt(api_6)
-        if r == 1:
-            if ATUAL != 5:
-                ATUAL += 1
-            else:
-                ATUAL = 0
-        else:
-            up[ATUAL] = '-'
+                while current != size - 1:
+                    keys[current] = keys[current + 1]
+                    current += 1
+                size -= 1
         print('Cursor search ended. Sleeping for 60 seconds...')
         time.sleep(60)
 while True:
