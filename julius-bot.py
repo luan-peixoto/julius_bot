@@ -6,35 +6,37 @@ from os import environ
 from random import randint
 
 # --------------------------------------------------------------------------  KEYS
-auth_0 = tweepy.OAuthHandler(environ['CONSUMER_KEY_0'], environ['CONSUMER_SECRET_0'])
-auth_0.set_access_token(environ['ACCESS_KEY_0'], environ['ACCESS_SECRET_0'])
-api_0 = tweepy.API(auth_0, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 
-auth_1 = tweepy.OAuthHandler(environ['CONSUMER_KEY_1'], environ['CONSUMER_SECRET_1'])
-auth_1.set_access_token(environ['ACCESS_KEY_1'], environ['ACCESS_SECRET_1'])
-api_1 = tweepy.API(auth_1, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
+def auth(ck, cs, ak, ass):
+    auth = tweepy.OAuthHandler(ck, cs)
+    auth.set_access_token(ak, ass)
+    api= tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
+    return api
 
-auth_2 = tweepy.OAuthHandler(environ['CONSUMER_KEY_2'], environ['CONSUMER_SECRET_2'])
-auth_2.set_access_token(environ['ACCESS_KEY_2'], environ['ACCESS_SECRET_2'])
-api_2 = tweepy.API(auth_2, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 
-auth_3 = tweepy.OAuthHandler(environ['CONSUMER_KEY_3'], environ['CONSUMER_SECRET_3'])
-auth_3.set_access_token(environ['ACCESS_KEY_3'], environ['ACCESS_SECRET_3'])
-api_3 = tweepy.API(auth_3, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
+api_0 = auth(environ['CONSUMER_KEY_0'], environ['CONSUMER_SECRET_0'], environ['ACCESS_KEY_0'], environ['ACCESS_SECRET_0'])
 
-auth_4 = tweepy.OAuthHandler(environ['CONSUMER_KEY_4'], environ['CONSUMER_SECRET_4'])
-auth_4.set_access_token(environ['ACCESS_KEY_4'], environ['ACCESS_SECRET_4'])
-api_4 = tweepy.API(auth_4, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
+api_1 = auth(environ['CONSUMER_KEY_1'], environ['CONSUMER_SECRET_1'], environ['ACCESS_KEY_1'], environ['ACCESS_SECRET_1'])
 
-auth_5 = tweepy.OAuthHandler(environ['CONSUMER_KEY_5'], environ['CONSUMER_SECRET_5'])
-auth_5.set_access_token(environ['ACCESS_KEY_5'], environ['ACCESS_SECRET_5'])
-api_5 = tweepy.API(auth_5, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
+api_2 = auth(environ['CONSUMER_KEY_2'], environ['CONSUMER_SECRET_2'], environ['ACCESS_KEY_2'], environ['ACCESS_SECRET_2'])
 
-auth_6 = tweepy.OAuthHandler(environ['CONSUMER_KEY_6'], environ['CONSUMER_SECRET_6'])
-auth_6.set_access_token(environ['ACCESS_KEY_6'], environ['ACCESS_SECRET_6'])
-api_6 = tweepy.API(auth_6, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
+api_3 = auth(environ['CONSUMER_KEY_3'], environ['CONSUMER_SECRET_3'], environ['ACCESS_KEY_3'], environ['ACCESS_SECRET_3'])
+
+api_4 = auth(environ['CONSUMER_KEY_4'], environ['CONSUMER_SECRET_4'], environ['ACCESS_KEY_4'], environ['ACCESS_SECRET_4'])
+
+api_5 = auth(environ['CONSUMER_KEY_5'], environ['CONSUMER_SECRET_5'], environ['ACCESS_KEY_5'], environ['ACCESS_SECRET_5'])
+
+api_6 = auth(environ['CONSUMER_KEY_6'], environ['CONSUMER_SECRET_6'], environ['ACCESS_KEY_6'], environ['ACCESS_SECRET_6'])
+
+api_7 = auth(environ['CONSUMER_KEY_7'], environ['CONSUMER_SECRET_7'], environ['ACCESS_KEY_7'], environ['ACCESS_SECRET_7'])
+
+api_8 = auth(environ['CONSUMER_KEY_8'], environ['CONSUMER_SECRET_8'], environ['ACCESS_KEY_8'], environ['ACCESS_SECRET_8'])
+
+api_9 = auth(environ['CONSUMER_KEY_9'], environ['CONSUMER_SECRET_9'], environ['ACCESS_KEY_9'], environ['ACCESS_SECRET_9'])
+
 
 # -------------------------------------------------------------------------- SEARCH
+livres = ['aetheryel', 'luanpxoto']
 pesquisa = 'julius?'
 pesquisa_f = 'julius?!'
 tweet_number = 20
@@ -59,7 +61,7 @@ burros = []
 
 
 def time_checker(tweet_id, tweet_created_at, user_screen_name, search_text):
-    time_spam = datetime.timedelta(0, 0, 0, 0, 3, 0, 0)
+    time_spam = datetime.timedelta(0, 0, 0, 0, 2, 0, 0)
     current_tweet = datetime.datetime.strptime(tweet_created_at, '%Y-%m-%d %H:%M:%S')
     for twt in tweepy.Cursor(api_0.user_timeline, id=user_screen_name, tweet_mode='extended', include_rts=False).items(
             10):
@@ -115,7 +117,7 @@ def reply_tt(api_n):
             if pesquisa in tweet.full_text.lower():
                 if tweet.lang not in filter:
                     check = time_checker(tweet.id, str(tweet.created_at), tweet.user.screen_name, pesquisa)
-                    if check:
+                    if check and (tweet.user.screen_name not in livres):
                         print('User already requested in less than 3 minutes, ignoring...')
                         burros.append(tweet.user.screen_name)
                     else:
@@ -203,10 +205,10 @@ def reply_tt(api_n):
 
 # -------------------------------------------------------------------------- MAIN
 
-keys = [api_1, api_2, api_3, api_4, api_5, api_6]
-nums = ['FIRST','SECOND','THIRD','FOURTH','FIFTH','SIXTH']
+keys = [api_1, api_2, api_3, api_4, api_5, api_6, api_7, api_8, api_9]
+nums = ['FIRST','SECOND','THIRD','FOURTH','FIFTH','SIXTH', 'SEVENTH', 'EIGHT', 'NINETH']
 current = 0
-size = 6
+size = 9
 print('Running bot...')
 while size > 0:
         print('[USING %s KEY]' %nums[current])
