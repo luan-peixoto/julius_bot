@@ -219,14 +219,16 @@ while size > 0:
             else:
                 current += 1
         else:
+            print("Key error at [%s], skipping key...")
             if current == size - 1:
                 size -= 1
                 current = 0
             else:
-                while current != size - 1:
+                while current < size - 1:
                     keys[current] = keys[current + 1]
                     current += 1
                 size -= 1
+                current = 0
         print('Cursor search ended. Sleeping for 60 seconds...')
         time.sleep(60)
 while True:
