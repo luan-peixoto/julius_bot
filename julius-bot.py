@@ -62,7 +62,7 @@ burros = []
 
 
 def time_checker(tweet_id, tweet_created_at, user_screen_name, search_text):
-    time_spam = datetime.timedelta(0, 0, 0, 0, 3, 0, 0)
+    time_spam = datetime.timedelta(0, 0, 0, 0, 2, 0, 0)
     current_tweet = datetime.datetime.strptime(tweet_created_at, '%Y-%m-%d %H:%M:%S')
     for twt in tweepy.Cursor(api_0.user_timeline, id=user_screen_name, tweet_mode='extended', include_rts=False).items(
             10):
@@ -107,6 +107,7 @@ def reply_tt(api_n):
     last_seen_id = int(retrieve_text(FILE_NAME))
     print('Searching for tweets...')
     tweets = []
+    reply_number = 0
     for tt in tweepy.Cursor(api_0.search, pesquisa + ' -filter:retweets', since_id=last_seen_id,
                             tweet_mode='extended',
                             result_type='recent').items(tweet_number):
@@ -186,6 +187,7 @@ def reply_tt(api_n):
                                     '@' + tweet.user.screen_name + ' ' + the_reply[8],
                                     in_reply_to_status_id=tweet.id)
                             print('Reply sent. Sleeping for 60~70 seconds.')
+                            reply_number += 1
                             time.sleep(randint(60, 70))
                 else:
                     print('Not a br tweet, skipping...')
@@ -194,6 +196,8 @@ def reply_tt(api_n):
             if int(tweet.id) > int(last_seen_id):
                 store_text(tweet.id, FILE_NAME)
                 print('Last seen ID updated - ' + str(tweet.id))
+            if reply_number >= 4:
+                return 1
         except tweepy.TweepError as e:
             print(e.reason)
             return 0
