@@ -61,7 +61,7 @@ burros = []
 
 
 def time_checker(tweet_id, tweet_created_at, user_screen_name, search_text):
-    time_spam = datetime.timedelta(0, 0, 0, 0, 2, 0, 0)
+    time_spam = datetime.timedelta(0, 0, 0, 0, 3, 0, 0)
     current_tweet = datetime.datetime.strptime(tweet_created_at, '%Y-%m-%d %H:%M:%S')
     for twt in tweepy.Cursor(api_0.user_timeline, id=user_screen_name, tweet_mode='extended', include_rts=False).items(
             10):
@@ -195,8 +195,7 @@ def reply_tt(api_n):
                 print('Last seen ID updated - ' + str(tweet.id))
         except tweepy.TweepError as e:
             print(e.reason)
-            if '261' in e.reason:
-                return 0
+            return 0
 
         except StopIteration:
             break
