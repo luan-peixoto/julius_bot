@@ -34,6 +34,7 @@ api_8 = auth(environ['CONSUMER_KEY_8'], environ['CONSUMER_SECRET_8'], environ['A
 
 api_9 = auth(environ['CONSUMER_KEY_9'], environ['CONSUMER_SECRET_9'], environ['ACCESS_KEY_9'], environ['ACCESS_SECRET_9'])
 
+api_10 = auth(environ['CONSUMER_KEY_10'], environ['CONSUMER_SECRET_10'], environ['ACCESS_KEY_10'], environ['ACCESS_SECRET_10'])
 
 # -------------------------------------------------------------------------- SEARCH
 livres = ['aetheryel', 'luanpxoto']
@@ -204,10 +205,10 @@ def reply_tt(api_n):
 
 # -------------------------------------------------------------------------- MAIN
 
-keys = [api_1, api_2, api_3, api_4, api_5, api_6, api_7, api_8, api_9]
-nums = ['FIRST','SECOND','THIRD','FOURTH','FIFTH','SIXTH', 'SEVENTH', 'EIGHT', 'NINETH']
+keys = [api_1, api_2, api_3, api_4, api_5, api_6, api_7, api_8, api_9, api_10]
+nums = ['FIRST','SECOND','THIRD','FOURTH','FIFTH','SIXTH', 'SEVENTH', 'EIGHT', 'NINETH', 'TENTH']
 current = 0
-size = 9
+size = 10
 print('Running bot...')
 while size > 0:
         print('[USING %s KEY]' %nums[current])
