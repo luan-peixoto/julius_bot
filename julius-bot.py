@@ -200,7 +200,8 @@ def reply_tt(api_n):
                 return 1
         except tweepy.TweepError as e:
             print(e.reason)
-            return 0
+            if '261' in e:
+                return 0
 
         except StopIteration:
             break
@@ -230,6 +231,7 @@ while size > 0:
             else:
                 while current < size - 1:
                     keys[current] = keys[current + 1]
+                    nums[current] = nums[current + 1]
                     current += 1
                 size -= 1
                 current = 0
