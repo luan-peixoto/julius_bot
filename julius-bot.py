@@ -200,7 +200,7 @@ def reply_tt(api_n):
                 return 1
         except tweepy.TweepError as e:
             print(e.reason)
-            if '261' in e:
+            if '261' in e.reason:
                 return 0
 
         except StopIteration:
